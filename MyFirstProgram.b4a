@@ -1,0 +1,87 @@
+﻿Build1=Default,b4a.MyFirstProgram
+File1=Layout.bal
+FileGroup1=Default Group
+Group=Default Group
+Library1=core
+Library2=xui
+ManifestCode='This code will be applied to the manifest file during compilation.~\n~'You do not need to modify it in most cases.~\n~'See this link for for more information: https://www.b4x.com/forum/showthread.php?p=78136~\n~AddManifestText(~\n~<uses-sdk android:minSdkVersion="14" android:targetSdkVersion="29"/>~\n~<supports-screens android:largeScreens="true" ~\n~    android:normalScreens="true" ~\n~    android:smallScreens="true" ~\n~    android:anyDensity="true"/>)~\n~SetApplicationAttribute(android:icon, "@drawable/icon")~\n~SetApplicationAttribute(android:label, "$LABEL$")~\n~CreateResourceFromFile(Macro, Themes.LightTheme)~\n~'End of default text.~\n~
+Module1=Starter
+NumberOfFiles=1
+NumberOfLibraries=2
+NumberOfModules=1
+Version=11
+@EndOfDesignText@
+#Region  Project Attributes 
+	#ApplicationLabel: MyFirstProgram
+	#VersionCode: 1
+	#VersionName: 
+	'SupportedOrientations possible values: unspecified, landscape or portrait.
+	#SupportedOrientations: unspecified
+	#CanInstallToExternalStorage: False
+#End Region
+
+#Region  Activity Attributes 
+	#FullScreen: False
+	#IncludeTitle: True
+#End Region
+
+Sub Process_Globals
+	'These global variables will be declared once when the application starts.
+	'These variables can be accessed from all modules.
+	Private xui As XUI
+End Sub
+
+Sub Globals
+	'These global variables will be redeclared each time the activity is created.
+	Private btnAction As Button
+	Private edtResult As EditText
+	Private lblComments As Label
+	Private lblMathSign As Label
+	Private lblNumber1 As Label
+	Private lblNumber2 As Label
+	Public Number1, Number2 As Int
+End Sub
+
+Sub Activity_Create(FirstTime As Boolean)
+	Activity.LoadLayout("Layout")
+	NewProblem
+End Sub
+
+Sub Activity_Resume
+
+End Sub
+
+Sub Activity_Pause (UserClosed As Boolean)
+
+End Sub
+
+Sub NewProblem
+	Number1 = Rnd(1, 10) ' Generates a random number between 1 and 9
+	Number2 = Rnd(1, 10) ' Generates a random number between 1 and 9
+	lblNumber1.Text = Number1 'Displays Number1 in label lblNumber1
+	lblNumber2.Text = Number2 'Displays Number2 in label lblNumber2
+	lblComments.Text = "Enter the result" & CRLF & "and click on OK"
+	edtResult.Text = "" 'Sets edtResult.Text to empty
+End Sub
+
+Sub CheckResult
+	If edtResult.Text = Number1 + Number2 Then
+		lblComments.Text = "G O O D  result" & CRLF & "Click on NEW"
+		btnAction.Text = "N E W"
+	Else
+		lblComments.Text = "W R O N G  Result" & CRLF & "Enter a new result" & CRLF & "and click OK"
+	End If
+End Sub
+
+Private Sub btnAction_Click
+	If btnAction.Text = "O K" Then
+		If edtResult.Text = "" Then
+			MsgboxAsync("No result entered", "E R R O R")
+			Else
+				CheckResult
+		End If
+		Else
+			NewProblem
+			btnAction.Text = "O K"
+	End If
+End Sub
